@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXXPOLIANT Links</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(45deg, #8A2BE2, #FF4500);
+            --bg-color: #000;
+            --text-color: #fff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        .light-theme {
+            --bg-color: #f0f0f0;
+            --text-color: #000;
+            --card-bg: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-gradient);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            z-index: 2;
+        }
+
+        .title-wrapper {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .title-line {
+            display: block;
+            font-size: 2.2rem;
+            line-height: 1.4;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        .title-line:first-child {
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .title-line:last-child {
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .links {
+            display: grid;
+            gap: 0.8rem;
+            backdrop-filter: blur(10px);
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem;
+            border-radius: 8px;
+            background: var(--card-bg);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .link-item:hover {
+            transform: scale(1.03);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .bg-effects {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .effect {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 25s infinite linear;
+            mix-blend-mode: screen;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10vw, 15vh) rotate(90deg); }
+            50% { transform: translate(-10vw, 20vh) rotate(180deg); }
+            75% { transform: translate(15vw, -5vh) rotate(270deg); }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle"></button>
+    
+    <div class="bg-effects"></div>
+
+    <div class="container">
+        <div class="title-wrapper">
+            <h1 class="title-line">Hello there</h1>
+            <h1 class="title-line">I'm XXXPOLIANT</h1>
+        </div>
+        
+        <div class="links"></div>
+    </div>
+
+    <script>
+        const socials = [
+            {emoji: '🎥', name: 'YouTube', url: 'https://www.youtube.com/@XXXPOLIANT'},
+            {emoji: '🎮', name: 'Twitch', url: 'https://www.twitch.tv/xxxpoliant'},
+            {emoji: '🎵', name: 'Spotify', url: '#'},
+            {emoji: '💻', name: 'GitHub', url: 'https://github.com/XXXPOLIANT'},
+            {emoji: '📸', name: 'Instagram', url: '#'},
+            {emoji: '🐦', name: 'X/Twitter', url: 'https://x.com/XXXPOLIANT'},
+            {emoji: '🎮', name: 'Steam', url: 'https://steamcommunity.com/id/xxxpoliant/'},
+            {emoji: '❤️', name: 'Patreon', url: 'https://www.patreon.com/c/XXXPOLIANT'}
+        ];
+
+        const linksContainer = document.querySelector('.links');
+        socials.forEach(social => {
+            const link = document.createElement('a');
+            link.className = 'link-item';
+            link.href = social.url;
+            link.target = '_blank';
+            link.innerHTML = `${social.emoji} ${social.name}`;
+            linksContainer.appendChild(link);
+        });
+
+        const effectsContainer = document.querySelector('.bg-effects');
+        const effectsCount = 12;
+        
+        for (let i = 0; i < effectsCount; i++) {
+            const effect = document.createElement('div');
+            effect.className = 'effect';
+            
+            const size = Math.random() * 250 + 50;
+            const hue1 = Math.random() * 360;
+            const hue2 = (hue1 + 120) % 360;
+            
+            effect.style.background = `linear-gradient(45deg, 
+                hsl(${hue1}, 80%, 60%), 
+                hsl(${hue2}, 80%, 60%))`;
+            effect.style.width = `${size}px`;
+            effect.style.height = `${size}px`;
+            effect.style.left = `${Math.random() * 100}%`;
+            effect.style.top = `${Math.random() * 100}%`;
+            effect.style.animation = `float ${20 + Math.random() * 20}s infinite linear`;
+            
+            effectsContainer.appendChild(effect);
+        }
+
+        document.querySelector('.theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+        });
+    </script>
+</body>
+</html>
